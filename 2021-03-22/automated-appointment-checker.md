@@ -9,7 +9,12 @@ There are many tools to isolate the requests going back and forth between you, t
 
 **Note: Some information has been redacted/altered for security purposes**
 
+<img src="https://i.imgur.com/vBG8nem.png">
+
+<img src="https://i.imgur.com/gr68eTS.png">
+
 **request.sh**
+
 One minor modification I've made to the cURL that comes from chrome is to replace "--compressed" flag with "-s" flag. The curl should not be compressed to analize the response as plain text, and the silent flag will omit meta-data about the request process itself (remove the silent flag to debug the curl request).  
 
 ```
