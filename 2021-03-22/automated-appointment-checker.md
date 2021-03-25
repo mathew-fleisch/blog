@@ -81,3 +81,10 @@ while true; do
 done
 ```
 
+
+## Revisions
+
+I have modified this script to notify slack when action needs to be taken. To run these scripts, you will need a slack token, channel and user id added to the sample-env file for it to work. 
+ - [sample-env](sample-env)
+ - [request.sh](request.sh)
+ - [loop.sh](loop.sh)

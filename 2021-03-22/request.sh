@@ -1,0 +1,17 @@
+curl 'https://www.walgreens.com/hcschedulersvc/svc/v2/immunizationLocations/timeslots' \
+  -H 'authority: www.walgreens.com' \
+  -H 'sec-ch-ua: "REDACTED"' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'user-agent: REDACTED' \
+  -H 'transactionid: REDACTED' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -H 'origin: https://www.walgreens.com' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'referer: https://www.walgreens.com/findcare/vaccination/covid-19/appointment/next-available' \
+  -H 'accept-language: en-US,en;q=0.9,la;q=0.8' \
+  -H 'cookie: REDACTED' \ 
+  --data-raw '{"position":{"latitude":37.768772,"longitude":-122.475971},"state":"CA","vaccine":{"productId":""},"appointmentAvailability":{"startDateTime":"2021-03-22"},"radius":25,"size":25,"serviceId":"99"}'
+  -s
