@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC2086
+
 usage="./loop.sh [sample-env]"
 dotenv="${1:-./.env}"
 starting=$(pwd)
@@ -82,6 +84,13 @@ while true; do
       echo
       echo
       MESSAGE="<@$notify_user> https://www.walgreens.com/findcare/vaccination/covid-19/appointment/next-available"
+      echo "$MESSAGE"
+      curl -s -X POST \
+        -H 'Content-Type: application/json' \
+        -H 'Authorization: Bearer '$SLACK_TOKEN \
+        -d '{"text": "'" $MESSAGE"'", "channel": "'$target_channel'"}' \
+        https://slack.com/api/chat.postMessage
+      MESSAGE=$(getLocations "$raw")
       echo "$MESSAGE"
       curl -s -X POST \
         -H 'Content-Type: application/json' \
