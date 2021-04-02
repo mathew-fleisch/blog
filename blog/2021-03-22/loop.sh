@@ -3,7 +3,6 @@
 
 usage="./loop.sh [sample-env]"
 dotenv="${1:-./.env}"
-starting=$(pwd)
 if ! [[ -f "$dotenv" ]]; then
   echo "Missing env file"
   echo "Usage: $usage"

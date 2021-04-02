@@ -1,6 +1,8 @@
 # slack token
 export SLACK_TOKEN=xoxb-
+
 # slack channel id
 export target_channel=
-# slack user id (to tag when action is needed
+
+# slack user id (to tag when action is needed)
 export notify_user=
