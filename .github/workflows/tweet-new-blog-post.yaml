@@ -39,4 +39,4 @@ jobs:
             | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -O {}
           chmod +x twitter-action
           ls -alF
-          ./twitter-action -message "I've just posted a new blog post: $commit_message"
+          ./twitter-action -message "New blog post: $commit_message"
