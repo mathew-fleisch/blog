@@ -1,0 +1,37 @@
+name: Tweet New Blog Post
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build:
+    name: Tweet New Blog Post
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tweet New Blog Post
+        env:
+          TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          echo "Check environment variables are set..."
+          expected="TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_ACCESS_TOKEN TWITTER_ACCESS_SECRET GIT_TOKEN"
+          for expect in $expected; do
+            if [[ -z "${!expect}" ]]; then
+              echo "Missing Github Secret: $expect"
+              echo "See read-me about automation to set this up in your fork"
+              exit 1
+            fi
+          done
+          twitter_action_tag=v1.0.1
+          curl -sL -H "Authorization: token $GIT_TOKEN" \
+            "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag" \
+            | jq -r '.assets[] | select(.name == "twitter-action").url' \
+            | xargs -I {} curl -sL \
+              -H "Authorization: token $GIT_TOKEN" \
+              -H "Accept:application/octet-stream" \
+              -o /usr/local/bin/twitter-action {}
+          twitter-action -m "Test: Github Action automated tweet."
