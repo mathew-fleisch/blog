@@ -29,10 +29,9 @@ jobs:
           twitter_action_tag=v1.0.1
           echo "Pull twitter-action: $twitter_action_tag"
           curl -sL -H "Authorization: token $GIT_TOKEN" "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag"
-          curl -sL -H "Authorization: token $GIT_TOKEN" "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag" | jq -r '.assets[] | select(.name == "twitter-action").browser_download_url'
           curl -sL -H "Authorization: token $GIT_TOKEN" \
             "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag" \
             | jq -r '.assets[] | select(.name == "twitter-action").browser_download_url' \
-            | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -o /usr/local/bin/twitter-action {}
+            | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -O {}
           ls -alF
-          twitter-action -m "Test: Github Action automated tweet."
+          ./twitter-action -m "Test: Github Action automated tweet."
