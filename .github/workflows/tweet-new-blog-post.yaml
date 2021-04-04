@@ -26,6 +26,10 @@ jobs:
               exit 1
             fi
           done
+          echo "git fetch --prune --unshallow (to make sure all tags are downloaded to action)"
+          git fetch --prune --unshallow
+          tag=$(git describe --tags)
+          commit_message="$(git for-each-ref refs/tags/$tag --format='%(contents)' | head -n1)"
           twitter_action_tag=v1.0.1
           echo "Pull twitter-action: $twitter_action_tag"
           curl -sL -H "Authorization: token $GIT_TOKEN" "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag"
@@ -35,4 +39,4 @@ jobs:
             | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -O {}
           chmod +x twitter-action
           ls -alF
-          ./twitter-action -message "Test: Github Action automated tweet."
+          ./twitter-action -message "I've just posted a new blog post: $commit_message"
