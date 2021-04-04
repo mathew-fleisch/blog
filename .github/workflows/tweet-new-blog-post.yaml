@@ -32,4 +32,5 @@ jobs:
             "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag" \
             | jq -r '.assets[] | select(.name == "twitter-action").url' \
             | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -O {}
+          ls -alF
           twitter-action -m "Test: Github Action automated tweet."
