@@ -79,7 +79,7 @@ This final section will run some bash to test if the proper environment variable
 
 **Usage**
 
-Now, when I am done with this blog post, I will run the following code to kick this automation off and automatically tweet the commit message.
+Running the following code triggered the automation to tweet the commit message and a link back to the blog.
 
 ```
 git add blog
