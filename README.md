@@ -6,6 +6,7 @@ My name is Mathew Fleisch, and I am a programmer and musician from the bay area 
 
 Github Actions are a really powerful (relatively) new tool for running continuous integration (CI) type automation. There are many published free actions to use on the [Github Actions Marketplace](https://github.com/marketplace?type=actions), but this post will instead focus on executing a custom shell script. The goal of this automation is that whenever I post a new blog post, I want github to automatically tweet that there is a new blog post on my personal twitter account. I will do another post on the go-binary that updates my twitter status, but this post will explain the usage. The process with twitter was the most elaborate experience I have ever had trying to acquire an key for an API. Once I had the api keys saved as github secrets I needed to post a twitter status update programmatically, I [forked](https://github.com/mathew-fleisch/twitter-action) a [repository](https://github.com/xorilog/twitter-action), and modified it to generate a [go-binary](https://github.com/mathew-fleisch/twitter-action/releases) that I could use in the github action I would use to automatically tweet. I then set up a github action to download and execute the go-binary on new git tags.
 
+---------------------------------------------------------------------
 
 ## [2021-03-22: Automated Appointment Checker](blog/2021-03-22/automated-appointment-checker.md)
 
