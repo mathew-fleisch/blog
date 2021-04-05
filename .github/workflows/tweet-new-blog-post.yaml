@@ -37,4 +37,4 @@ jobs:
             | jq -r '.assets[] | select(.name == "twitter-action").browser_download_url' \
             | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -O {}
           chmod +x twitter-action
-          ./twitter-action -message "New blog post: $commit_message"
+          ./twitter-action -message "New blog post: $commit_message https://github.com/mathew-fleisch/blog"
