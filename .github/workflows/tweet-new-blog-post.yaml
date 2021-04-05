@@ -17,6 +17,7 @@ jobs:
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
+          twitter_action_tag=v1.0.1
           echo "Check environment variables are set..."
           expected="TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_ACCESS_TOKEN TWITTER_ACCESS_SECRET GIT_TOKEN"
           for expect in $expected; do
@@ -30,13 +31,10 @@ jobs:
           git fetch --prune --unshallow
           tag=$(git describe --tags)
           commit_message="$(git for-each-ref refs/tags/$tag --format='%(contents)' | head -n1)"
-          twitter_action_tag=v1.0.1
           echo "Pull twitter-action: $twitter_action_tag"
-          curl -sL -H "Authorization: token $GIT_TOKEN" "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag"
           curl -sL -H "Authorization: token $GIT_TOKEN" \
             "https://api.github.com/repos/mathew-fleisch/twitter-action/releases/tags/$twitter_action_tag" \
             | jq -r '.assets[] | select(.name == "twitter-action").browser_download_url' \
             | xargs -I {} curl -sL -H "Authorization: token $GIT_TOKEN" -H "Accept:application/octet-stream" -O {}
           chmod +x twitter-action
-          ls -alF
           ./twitter-action -message "New blog post: $commit_message"
