@@ -2,6 +2,16 @@
 
 My name is Mathew Fleisch, and I am a programmer and musician from the bay area in California. I started out as a developer and in the past few years shifted to infrastructure/devops. I love creating automation and optimizing automation pipelines. I will use this "blog" to share stories, experiences and I am starting in March of 2021, in the midst of the global coronavirus pandemic.
 
+---------------------------------------------------------------------
+
+## [2021-04-07: Dev in a Can](blog/2021-04-07/dev-in-a-can.md)
+
+For the past few years I have been using docker on my macs as a local development environment, rather than installing and maintaining tools directly on the mac itself. Essentially I only install Docker and my IDE of choice, and use docker for everything else. I will mount source code and private keys into a linux container that has all of the tools I might need, and from inside the container, I can run tools like terraform, helm and kubectl. This method can help align teammates on the same versions of tools, and the (likely) operating system the tools will be run on, in automation/CI. Using the [asdf version manager](https://asdf-vm.com/#/) can help when multiple versions of tools like terraform or kubectl are used in different environments. The tool provides methods to install multiple versions of select tools, and the ability to switch between versions of the same tool.
+
+<img src="https://i.imgur.com/AGLznZ4.gif" width="100%" />
+
+---------------------------------------------------------------------
+
 ## [2021-04-04: Tweet Via Github Actions](blog/2021-04-04/tweet-via-github-actions.md)
 
 Github Actions are a really powerful (relatively) new tool for running continuous integration (CI) type automation. There are many published free actions to use on the [Github Actions Marketplace](https://github.com/marketplace?type=actions), but this post will instead focus on executing a custom shell script. The goal of this automation is that whenever I post a new blog post, I want github to automatically tweet that there is a new blog post on my personal twitter account. I will do another post on the go-binary that updates my twitter status, but this post will explain the usage. The process with twitter was the most elaborate experience I have ever had trying to acquire an key for an API. Once I had the api keys saved as github secrets I needed to post a twitter status update programmatically, I [forked](https://github.com/mathew-fleisch/twitter-action) a [repository](https://github.com/xorilog/twitter-action), and modified it to generate a [go-binary](https://github.com/mathew-fleisch/twitter-action/releases) that I could use in the github action I would use to automatically tweet. I then set up a github action to download and execute the go-binary on new git tags.
