@@ -10,6 +10,8 @@ For the past few years I have been using docker on my macs as a local developmen
 
 <img src="https://i.imgur.com/AGLznZ4.gif" width="100%" />
 
+[Read More...](blog/2021-04-07/dev-in-a-can.md)
+
 ---------------------------------------------------------------------
 
 ## [2021-04-04: Tweet Via Github Actions](blog/2021-04-04/tweet-via-github-actions.md)
