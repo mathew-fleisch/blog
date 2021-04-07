@@ -20,7 +20,7 @@ There are many tools to isolate the requests going back and forth between you, t
 
 One minor modification I've made to the cURL that comes from chrome is to replace "--compressed" flag with "-s" flag. The curl should not be compressed to analyze the response as plain text, and the silent flag will omit meta-data about the request process itself (remove the silent flag to debug the curl request).  
 
-```
+```bash
 curl 'https://www.walgreens.com/hcschedulersvc/svc/v2/immunizationLocations/timeslots' \
   -s \
   -H 'authority: www.walgreens.com' \
@@ -41,7 +41,7 @@ curl 'https://www.walgreens.com/hcschedulersvc/svc/v2/immunizationLocations/time
 ```
 
 **example request payload (pretty)**
-```
+```json
 {
   "position": {
     "latitude": 37.768772,
@@ -63,7 +63,7 @@ curl 'https://www.walgreens.com/hcschedulersvc/svc/v2/immunizationLocations/time
 
 **loop.sh**
 
-```
+```bash
 #!/bin/bash
 compare=$(./request.sh)
 while true; do

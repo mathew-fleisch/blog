@@ -7,7 +7,7 @@ Github Actions are a really powerful (relatively) new tool for running continuou
 
 I searched the [Github Actions Marketplace](https://github.com/marketplace?type=actions) for an [existing action](https://github.com/marketplace/actions/twitter-action) that would do what I wanted it to do, but I wanted a go-binary to test and use outside of the github-action itself. So, I [forked](https://github.com/mathew-fleisch/twitter-action) [this repository](https://github.com/xorilog/twitter-action), and added a github-action that would build the go-binary and save it as a release artifact anytime a new git tag was pushed, as well as build/push a container to [my docker hub account](https://hub.docker.com/u/mathewfleisch/twitter-action/tags?page=1&ordering=last_updated). Usage of the go-binary to update a twitter status (tweet) would look like this:
 
-```
+```bash
 export TWITTER_CONSUMER_KEY=xxx
 export TWITTER_CONSUMER_SECRET=xxx
 export TWITTER_ACCESS_TOKEN=xxx
@@ -19,7 +19,7 @@ export TWITTER_ACCESS_SECRET=xxx
 
 The repository has five tokens saved as github secrets that are used in the [Github Action](../../.github/workflows/tweet-new-blog-post.yaml) to access the github and twitter APIs. There are three main sections of a github action yaml file: the trigger, environment set up, and the actual scripts that are run. In this first section, the trigger is defined to run anytime a tag is pushed that starts with the letter 'v'.
 
-```
+```yaml
 name: Tweet New Blog Post
 on:
   push:
@@ -32,7 +32,7 @@ on:
 This next section defines what system type the code will run on (ubuntu-latest), as well as setting github secrets to environment variables.
 
 
-```
+```yaml
 jobs:
   build:
     name: Tweet New Blog Post
@@ -52,7 +52,7 @@ jobs:
 
 This final section will run some bash to test if the proper environment variables have been set, download the tweet go-binary from github, and execute it using the commit message of the git tag.
 
-```
+```yaml
         run: |
           twitter_action_tag=v1.0.1
           echo "Check environment variables are set..."
@@ -81,7 +81,7 @@ This final section will run some bash to test if the proper environment variable
 
 Running the following code triggered the automation to tweet the commit message and a link back to the blog.
 
-```
+```bash
 git add blog
 git commit -m "Automated Tweeting via Github Actions"
 git push origin main
