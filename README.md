@@ -1,6 +1,16 @@
 # Mathew's Blog
 
-My name is Mathew Fleisch, and I am a programmer and musician from the bay area in California. I started out as a developer and in the past few years shifted to infrastructure/devops. I love creating automation and optimizing automation pipelines. I will use this "blog" to share stories, experiences and I am starting in March of 2021, in the midst of the global coronavirus pandemic.
+My name is Mathew Fleisch, and I am a programmer and musician from the bay area in California. I started my career as a developer, and in the past few years shifted to infrastructure/devops. I love creating automation and optimizing automation pipelines. I will use this "blog" to share stories, experiences and I am starting in March of 2021, in the midst of the global coronavirus pandemic.
+
+---------------------------------------------------------------------
+
+## [2021-05-17: Self-Hosted GitHub Action Runners On Self-Hosted Kubernetes Cluster](blog/2021-05-17/self-hosted-github-action-runners-on-self-hosted-kubernetes-cluster.md)
+
+In this post, I will describe how I self-hosted Github Action runners on my home Raspberry pi k3s cluster, as my main method of continuous integration. I will use these runners to build and push multi-arch docker containers and go-binaries for all of my personal projects, going forward. To start, I followed [Jeff Geerling's k3s series](https://www.youtube.com/playlist?list=PL2_OBreMn7Frk57NLmLheAaSSpJLLL90G) to build the kubernetes cluster (using this [ansible playbook](https://github.com/k3s-io/k3s-ansible)), and installed the prometheus+grafana stack using a fork of the [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) project by [Carlos Eduardo](https://carlosedp.medium.com/) called [cluster monitoring](https://github.com/carlosedp/cluster-monitoring). I then removed the cluster monitoring project because Prometheus took up too many resources for the pretty graphs and alerts to be worth the CPU cycles, in my two node k3s cluster. Next, I needed to build a container that would include any tools that I might use in automation, as well as the [Github Action runner agent](https://github.com/actions/runner), and host that container in a container registry (docker hub). Finally, I created a kubernetes deployment with the environment variables, the entry-point expects, and tested everything was working by rebuilding the runner's container.
+
+<img src="https://i.imgur.com/Hj2cNJN.png" width="100%" />
+
+[Read More...](blog/2021-05-17/self-hosted-github-action-runners-on-self-hosted-kubernetes-cluster.md)
 
 ---------------------------------------------------------------------
 
