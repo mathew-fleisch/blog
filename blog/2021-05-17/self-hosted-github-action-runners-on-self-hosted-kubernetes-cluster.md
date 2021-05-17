@@ -262,4 +262,4 @@ kubectl -n github-actions get pods
 
 With the self-hosted Github action runner, running for the [docker-dev-env repository](https://github.com/mathew-fleisch/docker-dev-env/) a [pull request](https://github.com/mathew-fleisch/docker-dev-env/pull/3) details how the job points to a self-hosted runner. Pushing a new git tag triggers the Github action to build and push a new container, in this pod `docker-dev-env-6f4c79698c-ngx4q`
 
-<img src="https://i.imgur.com/meIocp9.png" width="100%" />
+<img src="https://i.imgur.com/hO4WdFl.png" width="100%" />
