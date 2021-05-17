@@ -101,7 +101,7 @@ jobs:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
         run: |
-		  echo "Login to container registry"
+          echo "Login to container registry"
           echo "$REGISTRY_PASSWORD" | docker login docker.io -u="$REGISTRY_USERNAME" --password-stdin
           echo "Build and push docker container"
           docker buildx build --platform linux/amd64,linux/arm64 -t mathewfleisch/github-actions-runner:$tag --push .
