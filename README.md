@@ -2,6 +2,13 @@
 
 My name is Mathew Fleisch, and I am a programmer and musician from the bay area in California. I started my career as a developer, and in the past few years shifted to infrastructure/devops. I love creating automation and optimizing automation pipelines. I will use this "blog" to share stories, experiences and I am starting in March of 2021, in the midst of the global coronavirus pandemic.
 
+
+## [2021-07-02: Automatic Dependency Updates](blog/2021-07-02/automatic-asdf-dependency-updates.md)
+
+Keeping tools up to date and managing versions can be a little less painful with [the asdf version manager](https://asdf-vm.com/#/) and a github-action, on a cron schedule. Some useful tools are not available through the host package manager (apt), and remote environments sometimes require specific versions of these tools. I have posted about the asdf version manager in previously, and this modification expands on the [docker-dev-env](https://github.com/mathew-fleisch/docker-dev-env) project to check for new versions of dependencies listed in the asdf config, and builds a new container, if any dependency has a new version listed. The next time the docker-dev-env is requested, it will prompt the user to overwrite the existing container to apply these updates automatically.
+
+[Read More...](blog/2021-07-02/automatic-asdf-dependency-updates.md)
+
 ---------------------------------------------------------------------
 
 ## [2021-05-17: Self-Hosted GitHub Action Runners On Self-Hosted Kubernetes Cluster](blog/2021-05-17/self-hosted-github-action-runners-on-self-hosted-kubernetes-cluster.md)
