@@ -2,13 +2,13 @@
 
 My name is Mathew Fleisch, and I am a programmer and musician from the bay area in California. I started my career as a developer, and in the past few years shifted to infrastructure/devops. I love creating automation and optimizing automation pipelines. I will use this "blog" to share stories, experiences and I am starting in March of 2021, in the midst of the global coronavirus pandemic.
 
-## [2021-08-11: Bashbot](blog/2021-08-1/bashbot.md)
+## [2021-08-11: Bashbot](blog/2021-08-11/bashbot.md)
 
 [Bashbot](https://github.com/mathew-fleisch/bashbot) is a chat-ops tool I built, to automate tasks that are common to infrastructure/devops teams. There are often scripts or CI (continuous integration) jobs that are run on behalf of developers, with elevated privileges, and Bashbot can trigger these actions via slack. Private slack channels can be used to restrict Bashbot commands to only those invited to the private channels, and the declarative configuration makes it easy to deploy as a scalable service. Bashbot provides an audit trail in slack, and via logs of the slack user that initiates each command, and allows users to trigger restricted commands, without elevating their privileges. I have used Bashbot to trigger CI-jobs (via `curl`), check status of cloud resources (via awscli), and execute scripts that would grant temporary access to production servers (via bash/python). Bashbot can be run as a go-binary or as a container with extra tools preinstalled that Bashbot can leverage when running commands. Bashbot uses a slash-command-like syntax to trigger commands `bashbot [command] [parameter1] [parameter2]` where commands and parameters must be explicitly defined in a configuration file, and contain no spaces or quotes.
 
 <img src="https://i.imgur.com/s0cf2Hl.gif" />
 
-[Read More...](blog/2021-08-1/bashbot.md)
+[Read More...](blog/2021-08-11/bashbot.md)
 
 ---------------------------------------------------------------------
 
