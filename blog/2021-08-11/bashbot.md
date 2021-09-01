@@ -19,8 +19,10 @@ After configuring Bashbot to run in a slack workspace, a socket connection ([RTM
   "help": "bashbot latest-release",
   "trigger": "latest-release",
   "location": "./",
-  "setup": "latest_version=$(curl -s https://api.github.com/repos/mathew-fleisch/bashbot/releases/latest | grep tag_name | cut -d '\"' -f 4)",
-  "command": "echo \"The latest version of <https://github.com/mathew-fleisch/bashbot|Bashbot>: <https://github.com/mathew-fleisch/bashbot/releases/tag/$latest_version|$latest_version>\"",
+  "command": [
+  	"latest_version=$(curl -s https://api.github.com/repos/mathew-fleisch/bashbot/releases/latest | grep tag_name | cut -d '\"' -f 4)",
+  	"&& echo \"The latest version of <https://github.com/mathew-fleisch/bashbot|Bashbot>: <https://github.com/mathew-fleisch/bashbot/releases/tag/$latest_version|$latest_version>\""
+  ],
   "parameters": [],
   "log": false,
   "ephemeral": false,
@@ -34,17 +36,17 @@ After configuring Bashbot to run in a slack workspace, a socket connection ([RTM
 - The `name`, `description` and `help` fields, are messages that can display to the user.
 - The `trigger` field is used as the main entry-point to trigger the command.
 - The `location` field is used to run scripts from specific filepaths on the host system.
-- The `setup` and `command` fields are passed to bash where the command would only run after setup completes successfully. In this case:
-	- A bash variable `latest_version` is set in the `setup` field, by executing `latest_version=$(curl -s https://api.github.com/repos/mathew-fleisch/bashbot/releases/latest | grep tag_name | cut -d '\"' -f 4)`
-	-  The bash variable set in the `setup` stage, is then used in the `command` in an `echo` command `echo \"The latest version of <https://github.com/mathew-fleisch/bashbot|Bashbot>: <https://github.com/mathew-fleisch/bashbot/releases/tag/$latest_version|$latest_version>\"`
+- The array of `command` fields are joined and passed to bash:
+	- A bash variable `latest_version` is set by executing `latest_version=$(curl -s https://api.github.com/repos/mathew-fleisch/bashbot/releases/latest | grep tag_name | cut -d '\"' -f 4)`
+	-  The bash variable is then used `echo \"The latest version of <https://github.com/mathew-fleisch/bashbot|Bashbot>: <https://github.com/mathew-fleisch/bashbot/releases/tag/$latest_version|$latest_version>\"`
 			-  Note 1: Quotes are escaped because it is saved as a string in a json object
 			-  Note 2: Slack's syntax for formatting links: `<url|My link>`
 - The `parameters` section define valid parameters to each Bashbot command, and in this case, the command takes no parameters.
 - The `log` flag will define an audit trail (or not) for those who executes each command and what the output was.
 - The `ephemeral` flag will send back any output as an ephemeral message to the user who executed it, and not the channel (default). Useful for sending back credentials, passwords or tokens.
 - The `response` field accepts two possible values: `text` or `code`
-	- The `text` option will send back the `STDOUT` of the `setup` and `command` fields as raw text
-	- The `code` option will send back the `STDOUT` of the `setup` and `command` fields formatted as a code block
+	- The `text` option will send back the `STDOUT` of the `command` fields as raw text
+	- The `code` option will send back the `STDOUT` of the `command` fields formatted as a code block
 - The `permissions` field defines an array of channel ids where specific commands can be restricted to. 
 
 In the [previous example](https://github.com/mathew-fleisch/bashbot/tree/main/examples/latest-release), the command provides a quick way to get up-to-date-information from an external resource. Parameters can be hard-coded values or built from the output of another command. These next two examples work in tandem for lists of key/value pairs. The first [example](https://github.com/mathew-fleisch/bashbot/tree/main/examples/list) `bashbot list` will list the available commands, and the [second](https://github.com/mathew-fleisch/bashbot/tree/main/examples/describe) `bashbot describe [command]` will use that list to validate a secondary parameter 	`[command]`.
@@ -56,8 +58,7 @@ In the [previous example](https://github.com/mathew-fleisch/bashbot/tree/main/ex
   "help": "bashbot list",
   "trigger": "list",
   "location": "./",
-  "setup": "echo \"\"",
-  "command": "jq -r '.tools[] | .trigger' ${BASHBOT_CONFIG_FILEPATH}",
+  "command": ["jq -r '.tools[] | .trigger' ${BASHBOT_CONFIG_FILEPATH}"],
   "parameters": [],
   "log": false,
   "ephemeral": false,
@@ -90,8 +91,7 @@ The companion command to the `bashbot list` command is `bashbot describe [comman
   "help": "bashbot describe [command]",
   "trigger": "describe",
   "location": "./",
-  "setup": "echo \"\"",
-  "command": "jq '.tools[] | select(.trigger==\"${command}\")' ${BASHBOT_CONFIG_FILEPATH}",
+  "command": []"jq '.tools[] | select(.trigger==\"${command}\")' ${BASHBOT_CONFIG_FILEPATH}"],
   "parameters": [
     {
       "name": "command",
@@ -118,8 +118,12 @@ When a user triggers any command, the slack user id and channel id can be used i
   "help": "bashbot trigger-github-action",
   "trigger": "trigger-github-action",
   "location": "./examples/github-action",
-  "setup": "export REPO_OWNER=mathew-fleisch && export REPO_NAME=bashbot && export SLACK_CHANNEL=${TRIGGERED_CHANNEL_ID} && export SLACK_USERID=${TRIGGERED_USER_ID}",
-  "command": "./trigger.sh",
+  "command": [
+  	"export REPO_OWNER=mathew-fleisch && export REPO_NAME=bashbot",
+	"&& export SLACK_CHANNEL=${TRIGGERED_CHANNEL_ID}",
+	"&& export SLACK_USERID=${TRIGGERED_USER_ID}",
+  	"&& ./trigger.sh"
+  ],
   "parameters": [],
   "log": false,
   "ephemeral": false,
