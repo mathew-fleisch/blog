@@ -6,7 +6,7 @@ Keeping tools up to date and managing versions can be a little less painful with
 
 ## The Details
 
-Using a [self-hosted github-action runner](../2021-05-17/self-hosted-github-action-runners-on-self-hosted-kubernetes-cluster.md), with asdf pre-installed, a [script](https://github.com/mathew-fleisch/docker-dev-env/blob/main/scripts/update-asdf-versions.sh) is executed daily on a cron-schedule, to compare the versions saved in the asdf config file ([.tool-versions](https://github.com/mathew-fleisch/docker-dev-env/blob/main/.tool-versions)), to the latest version available for each tool. There is also a [pin](https://github.com/mathew-fleisch/docker-dev-env/blob/main/pin) file that can prevent this update process from happening, and "pin" a tool to only install one or more specific versions. The cron will run daily in a convenient time for my timezone, so that if there is a problem, I am awake to address it.
+Using a [self-hosted github-action runner](../2021-05-17/self-hosted-github-action-runners-on-self-hosted-kubernetes-cluster.md), with asdf pre-installed, a [script](https://github.com/mathew-fleisch/tools/blob/main/scripts/update-asdf-to-latest.sh) is executed daily on a cron-schedule, to compare the versions saved in the asdf config file ([.tool-versions](https://github.com/mathew-fleisch/docker-dev-env/blob/main/.tool-versions)), to the latest version available for each tool. There is also a [pin](https://github.com/mathew-fleisch/docker-dev-env/blob/main/pin) file that can prevent this update process from happening, and "pin" a tool to only install one or more specific versions. The cron will run daily in a convenient time for my timezone, so that if there is a problem, I am awake to address it.
 
 ```yaml
 name: Update asdf versions
@@ -19,7 +19,7 @@ jobs:
     runs-on: self-hosted
 ```
 
-The [update-asdf-versions.sh](https://github.com/mathew-fleisch/docker-dev-env/blob/main/scripts/update-asdf-versions.sh) script will loop through the [.tool-versions](https://github.com/mathew-fleisch/docker-dev-env/blob/main/.tool-versions) file and compare each version listed to the latest version that asdf returns for each tool. If there isn't an exact string match, it will update that version directly in the .tool-versions file. For instance, if a new version of awscli was released (to check manually `asdf latest awscli` (as of this writing) => `awscli 2.2.16`) from the version listed in .tool-versions `awscli 2.2.15` and the script will update that version in the .tool-versions file. A `git tag` (semver: patch) is pushed to github, that automatically triggers the build/push process, and new container is saved to docker hub.
+The [update-asdf-versions.sh](https://github.com/mathew-fleisch/tools/blob/main/scripts/update-asdf-to-latest.sh) script will loop through the [.tool-versions](https://github.com/mathew-fleisch/docker-dev-env/blob/main/.tool-versions) file and compare each version listed to the latest version that asdf returns for each tool. If there isn't an exact string match, it will update that version directly in the .tool-versions file. For instance, if a new version of awscli was released (to check manually `asdf latest awscli` (as of this writing) => `awscli 2.2.16`) from the version listed in .tool-versions `awscli 2.2.15` and the script will update that version in the .tool-versions file. A `git tag` (semver: patch) is pushed to github, that automatically triggers the build/push process, and new container is saved to docker hub.
 
 ```yaml
 name: Release docker-dev-env
